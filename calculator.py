@@ -1,14 +1,14 @@
 operands = ['+', '-', '*', '/', '//']
-all_operands = ['+', '-', '*', '/', '//', '^', '^^', '%']
 history = {}
 b = 0
 result = None
+
 
 def print_messages(menu, history, result):
     if menu == 0:
         print("Thank you for using Calculator. ")
     elif menu == 2:
-        if history == {} and result == None :
+        if history == {} and result == None:
             print("No Operation performed uptill now")
         else:
             print("Previously Performed Operations :-")
@@ -19,6 +19,13 @@ def print_messages(menu, history, result):
             print("History is cleared")
     elif menu == 1:
         print("Invalid command. Please enter the correct Command")
+
+
+def other_error_messages():
+    if NameError or ValueError is True:
+        print("Invalid command. Please enter the correct one. ")
+    if ZeroDivisionError is True:
+        print("Can't be divided by zero")
 
 
 def addition(first, second):
@@ -68,13 +75,13 @@ def percentage(first, second):
 
 
 def print_result(result):
-    print(f"Answer is: {result}")
-
-    return first % second
+    if result != None:
+        print(f"Answer is: {result}")
+    return result
 
 
 def formulate_history(first, second, operand, result):
-    if result!= None:
+    if result != None:
         history[b] = [f"{first} {operand} {second} = {result}"]
         return history[b]
 
@@ -132,9 +139,9 @@ def num_input(operand):
     elif operand == '%':
         first_input = int(input("Please enter the number: "))
         second_input = int(input("Please enter the percentage: "))
-    else :
-        first_input=None
-        second_input=None
+    else:
+        first_input = None
+        second_input = None
     return first_input, second_input
 
 
@@ -146,30 +153,23 @@ try:
             first, second = num_input(operand)
             if operand == '+':
                 result = addition(first, second)
-                print_result(result)
             elif operand == '-':
                 result = subtraction(first, second)
-                print_result(result)
             elif operand == '*':
                 result = multiplication(first, second)
-                print_result(result)
             elif operand == '/':
                 result = division(first, second)
-                print_result(result)
             elif operand == '//':
                 result = divison_decimal(first, second)
-                print_result(result)
             elif operand == '^':
                 result = power(first, second)
-                print_result(result)
             elif operand == '^^':
                 result = under_root(first, second)
-                print_result(result)
             elif operand == '%':
                 result = percentage(first, second)
-                print_result(result)
             else:
                 print_messages(menu, history, result)
+            print_result(result)
             formulate_history(first, second, operand, result)
             b += 1
         elif menu == 2:
@@ -182,6 +182,6 @@ try:
     if menu == 0:
         print_messages(menu, history, result)
 except ValueError:
-    print("Wrong Input")
+    other_error_messages()
 except ZeroDivisionError:
-    print("Cant be divided by 0")
+    other_error_messages()
